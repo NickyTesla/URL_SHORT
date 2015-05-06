@@ -5,17 +5,24 @@ class UrlsController < ApplicationController
   end
 
   def redirect
-    redirect_to 'http://www.google.com'
+    path = params[:article]
+    url = Url.where(short: path)[0].url
+    if url.include?("http://") || url.include?("https://")
+      redirect_to url
+    else
+      redirect_to 'http://' + url
+    end
   end
 
   def create
-    @url = Url.new(url_params)
-    short = Url.shorten(params[:url])
+    @url = Url.create!(url_params)
+    short = Url.shorten(@url.id)
     @url[:short] = short
+
     if @url.save!
       render :show
     else
-      render :show
+      redirect_to :show
     end
 
   end

@@ -4,6 +4,10 @@ class Url < ActiveRecord::Base
 
   end
 
+  def url
+    self[:url]
+  end
+
   def self.shorten(id)
     chars = ('a'..'z').to_a.concat(('A'..'Z').to_a).concat(('0'..'9').to_a)
     indices = []
