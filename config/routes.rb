@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
-
-  get '/:article', to: redirect('http://www.reddit.com')
+  root to: 'urls#new'
+  resources :urls, only: [:create, :show]
+  get '/:article', to: 'urls#redirect'
 end
