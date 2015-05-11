@@ -6,11 +6,14 @@ class UrlsController < ApplicationController
 
   def redirect
     path = params[:article]
-    url = Url.where(short: path)[0].url
-    if url.include?("http://") || url.include?("https://")
-      redirect_to url
+    url = Url.where(short: path)[0]
+    url.add_visit
+    redirect = url.url
+
+    if redirect.include?("http://") || redirect.include?("https://")
+      redirect_to redirect
     else
-      redirect_to 'http://' + url
+      redirect_to 'http://' + redirect
     end
   end
 
