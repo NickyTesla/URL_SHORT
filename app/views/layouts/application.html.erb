@@ -6,8 +6,39 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-
+<h1>URL Shortener</h1>
 <%= yield %>
+
+<h3>Top 100 URLs</h6>
+<div class="table">
+  <table>
+    <tr>
+      <th>
+        Rank
+      </th>
+      <th>
+        Short Url
+      </th>
+      <th>
+        Visits
+      </th>
+    </tr>
+    <% Url.top_100.each_with_index do |url, idx| %>
+      <tr>
+        <td>
+        <%= idx + 1 %>
+        </td>
+        <td>
+          <a href="localhost:3000/<%= url.short %>">localhost:3000/<%= url.short %></a>
+        </td>
+        <td>
+          <%= url.visits %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+
+</div>
 
 </body>
 </html>

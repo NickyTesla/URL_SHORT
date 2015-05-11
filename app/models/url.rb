@@ -4,6 +4,22 @@ class Url < ActiveRecord::Base
 
   end
 
+
+  def self.top_100
+  query = <<-SQL
+    SELECT
+      url, short, visits
+    FROM
+      urls
+    ORDER BY
+      visits DESC
+    LIMIT 100
+
+    SQL
+
+    Url.find_by_sql(query)
+  end
+
   def url
     self[:url]
   end
@@ -26,5 +42,6 @@ class Url < ActiveRecord::Base
     indices.reverse!
     short = indices.map {|idx| chars[idx]}.join
   end
+
 
 end
